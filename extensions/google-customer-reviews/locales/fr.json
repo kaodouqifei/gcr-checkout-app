@@ -2,5 +2,8 @@
   "welcome": "Bienvenue dans l'extension {{target}}!",
   "iWouldLikeAFreeGiftWithMyOrder": "Je souhaite recevoir un cadeau gratuit avec ma commande",
   "addAFreeGiftToMyOrder": "Ajouter un cadeau gratuit à ma commande",
-  "metafieldChangesAreNotSupported": "Les modifications de métachamps de panier ne sont pas prises en charge dans cette commande"
+  "metafieldChangesAreNotSupported": "Les modifications de métachamps de panier ne sont pas prises en charge dans cette commande",
+  "reviewHeading": "Avis Google Customer Reviews",
+  "reviewPrompt": "Aidez-nous à nous améliorer en partageant votre avis sur votre expérience d'achat !",
+  "leaveReview": "Laisser un avis"
 }

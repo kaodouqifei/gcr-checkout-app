@@ -1,0 +1,23 @@
+{
+  "names": {
+    "googleCustomerReviews": "Google Customer Reviews"
+  },
+  "settings": {
+    "merchantId": {
+      "label": "Google Merchant ID",
+      "info": "Your Google Merchant Center ID. Find it in your Google Merchant Center account settings."
+    },
+    "optInStyle": {
+      "label": "Opt-in Style",
+      "info": "How the Google Customer Reviews opt-in dialog will appear on the page."
+    }
+  },
+  "ratings": {
+    "stars": {
+      "label": "Ratings"
+    },
+    "home": {
+      "recommendationText": "Recommended Product!"
+    }
+  }
+}

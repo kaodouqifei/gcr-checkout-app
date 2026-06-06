@@ -19,6 +19,10 @@ uid = "e7f58ce5-3515-6a7b-a6cc-98d503df179185d5e4b4"
 module = "./src/Checkout.jsx"
 target = "purchase.checkout.block.render"
 
+[[extensions.targeting]]
+module = "./src/ThankYou.jsx"
+target = "purchase.thank-you.block.render"
+
 [extensions.capabilities]
 # Gives your extension access to directly query Shopify’s storefront API.
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#api-access
@@ -41,9 +45,16 @@ key = "requestedFreeGift"
 # your extension. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#settings-definition
 
-# [extensions.settings]
-# [[extensions.settings.fields]]
-# key = "banner_title"
-# type = "single_line_text_field"
-# name = "Banner title"
-# description = "Enter a title for the banner"
+[extensions.settings]
+[[extensions.settings.fields]]
+key = "merchant_id"
+type = "single_line_text_field"
+name = "Google Merchant ID"
+description = "Your Google Merchant Center ID for Customer Reviews"
+
+[[extensions.settings.fields]]
+key = "default_delivery_days"
+type = "number_integer"
+name = "Default delivery days"
+description = "Default number of days for estimated delivery"
+default = 7

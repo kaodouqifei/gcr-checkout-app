@@ -1,0 +1,90 @@
+{% comment %}
+  Google Customer Reviews Opt-in Block
+  This block renders the Google Customer Reviews opt-in module
+  when the user is on the /pages/google-customer-reviews page.
+{% endcomment %}
+
+{% if template == 'page' and page.handle == 'google-customer-reviews' %}
+  <div id="gcr-optin-container"
+       data-merchant-id="{{ block.settings.merchant_id | escape }}"
+       data-opt-in-style="{{ block.settings.opt_in_style | default: 'CENTER_DIALOG' | escape }}">
+  </div>
+
+  <script>
+    window.renderOptIn = function() {
+      var container = document.getElementById('gcr-optin-container');
+      if (!container) {
+        console.error('Google Customer Reviews: container not found');
+        return;
+      }
+
+      var merchantId = container.dataset.merchantId;
+      var optInStyle = container.dataset.optInStyle;
+
+      if (!merchantId) {
+        console.error('Google Customer Reviews: Merchant ID not configured');
+        return;
+      }
+
+      // Parse URL parameters
+      var urlParams = new URLSearchParams(window.location.search);
+      var orderId = urlParams.get('order_id');
+      var email = urlParams.get('email');
+      var country = urlParams.get('country');
+      var deliveryDate = urlParams.get('delivery_date');
+
+      if (!orderId) {
+        console.warn('Google Customer Reviews: Missing order_id parameter');
+        return;
+      }
+
+      window.gapi.load('surveyoptin', function() {
+        window.gapi.surveyoptin.render({
+          "merchant_id": parseInt(merchantId, 10),
+          "order_id": orderId,
+          "email": email || undefined,
+          "delivery_country": country || '{{ localization.country.iso_code | default: "US" }}',
+          "estimated_delivery_date": deliveryDate || new Date().toISOString().split('T')[0],
+          "opt_in_style": optInStyle
+        });
+      });
+    };
+
+    window.___gcfg = {
+      lang: '{{ request.locale.iso_code | default: "en_US" }}'
+    };
+  </script>
+
+  <script src="https://apis.google.com/js/platform.js?onload=renderOptIn" async defer></script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "t:names.googleCustomerReviews",
+  "target": "body",
+  "settings": [
+    {
+      "type": "text",
+      "id": "merchant_id",
+      "label": "t:settings.merchantId.label",
+      "info": "t:settings.merchantId.info",
+      "default": "123456"
+    },
+    {
+      "type": "select",
+      "id": "opt_in_style",
+      "label": "t:settings.optInStyle.label",
+      "info": "t:settings.optInStyle.info",
+      "options": [
+        { "value": "CENTER_DIALOG", "label": "Center Dialog" },
+        { "value": "BOTTOM_RIGHT_DIALOG", "label": "Bottom Right Dialog" },
+        { "value": "BOTTOM_LEFT_DIALOG", "label": "Bottom Left Dialog" },
+        { "value": "TOP_RIGHT_DIALOG", "label": "Top Right Dialog" },
+        { "value": "TOP_LEFT_DIALOG", "label": "Top Left Dialog" },
+        { "value": "BOTTOM_TRAY", "label": "Bottom Tray" }
+      ],
+      "default": "CENTER_DIALOG"
+    }
+  ]
+}
+{% endschema %}
