@@ -2,7 +2,7 @@
 
 client_id = "8b3c2908c2827d0fedc021417d215eb7"
 name = "google-customer-reviews"
-application_url = "https://kaodouqifei.github.io/shopify-google-customer-reviews"
+application_url = "https://kaodouqifei.github.io/gcr-checkout-app"
 embedded = true
 
 [build]
@@ -17,5 +17,5 @@ scopes = ""
 
 [auth]
 redirect_urls = [
-  "https://kaodouqifei.github.io/shopify-google-customer-reviews/api/auth"
+  "https://kaodouqifei.github.io/gcr-checkout-app/api/auth"
 ]
