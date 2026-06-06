@@ -2,6 +2,8 @@
 
 client_id = "8b3c2908c2827d0fedc021417d215eb7"
 name = "google-customer-reviews"
+# Update this to your GitHub Pages URL after deployment
+# Format: https://<username>.github.io/<repo-name>/
 application_url = "https://shopify.dev/apps/default-app-home"
 embedded = true
 

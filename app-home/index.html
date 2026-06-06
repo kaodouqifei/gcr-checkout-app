@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Customer Reviews - Shopify App</title>
+  <meta name="shopify-api-key" content="%SHOPIFY_API_KEY%" />
+  <script src="https://cdn.shopify.com/shopifycloud/app-bridge.js"></script>
+  <script src="https://cdn.shopify.com/shopifycloud/polaris.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      background-color: #f1f1f1;
+      font-family: -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      color: #202223;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: 600;
+      margin: 0 0 16px 0;
+      color: #202223;
+    }
+    h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 20px 0 8px 0;
+      color: #202223;
+    }
+    p, li {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #5c5f62;
+      margin: 0 0 12px 0;
+    }
+    ul {
+      margin: 0 0 16px 0;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+      margin-right: 6px;
+    }
+    .badge-green {
+      background: #e3f1df;
+      color: #2c7a2c;
+    }
+    .badge-blue {
+      background: #e0f0ff;
+      color: #0066cc;
+    }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #202223;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .step-content {
+      flex: 1;
+    }
+    .step-content h3 {
+      margin-top: 0;
+    }
+    code {
+      background: #f6f6f7;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: 'SF Mono', Monaco, monospace;
+    }
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid #e3e3e3;
+    }
+    .setting-row:last-child {
+      border-bottom: none;
+    }
+    .setting-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #202223;
+    }
+    .setting-desc {
+      font-size: 13px;
+      color: #5c5f62;
+      margin-top: 2px;
+    }
+    .setting-default {
+      font-size: 13px;
+      color: #8c9196;
+      margin-top: 2px;
+    }
+    .tip {
+      background: #fff5ea;
+      border-left: 3px solid #f28c28;
+      padding: 12px 16px;
+      border-radius: 0 8px 8px 0;
+      margin: 16px 0;
+    }
+    .tip p {
+      margin: 0;
+      color: #6e4c1e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="card">
+      <h1>Google Customer Reviews</h1>
+      <p>Collect post-purchase feedback from your customers through Google's trusted review platform. This app adds a review opt-in link to your checkout thank-you page.</p>
+      <div>
+        <span class="badge badge-green">Extension-only</span>
+        <span class="badge badge-blue">Checkout Extensibility</span>
+      </div>
+    </div>
+
+    <!-- Setup Steps -->
+    <div class="card">
+      <h2>Setup Guide</h2>
+      <p>Follow these steps to configure the app for your store:</p>
+
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>Configure Checkout Extension</h3>
+          <p>Go to <strong>Settings &gt; Checkout</strong> in your Shopify admin, then open the <strong>Checkout Editor</strong>.</p>
+          <ul>
+            <li>Switch to the <strong>Thank you</strong> page</li>
+            <li>Click <strong>Add app block</strong></li>
+            <li>Select <strong>Google Customer Reviews</strong></li>
+            <li>Configure the settings (see below)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Create a Shopify Page</h3>
+          <p>Go to <strong>Online Store &gt; Pages</strong> and create a new page:</p>
+          <ul>
+            <li><strong>Title</strong>: Google Customer Reviews (or any title)</li>
+            <li><strong>Handle</strong>: <code>google-customer-reviews</code> (must match exactly)</li>
+            <li>Page content can be left empty</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>Enable Theme App Extension</h3>
+          <p>Go to <strong>Online Store &gt; Themes &gt; Customize</strong>, then open <strong>App embeds</strong>:</p>
+          <ul>
+            <li>Find <strong>Google Customer Reviews</strong> in the app embeds list</li>
+            <li>Toggle it <strong>ON</strong></li>
+            <li>Enter your <strong>Google Merchant ID</strong></li>
+            <li>Choose your preferred <strong>Opt-in Style</strong></li>
+            <li>Click <strong>Save</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Checkout Extension Settings -->
+    <div class="card">
+      <h2>Checkout Extension Settings</h2>
+      <p>These settings control the banner displayed on the thank-you page:</p>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-name">Default delivery days</div>
+          <div class="setting-desc">Number of days added to the order date to estimate delivery.</div>
+          <div class="setting-default">Default: 7</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-name">Banner heading</div>
+          <div class="setting-desc">The heading text displayed at the top of the banner.</div>
+          <div class="setting-default">Default: "Google Customer Reviews"</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-name">Prompt text</div>
+          <div class="setting-desc">The main message shown in the banner. Supports multiple lines.</div>
+          <div class="setting-default">Default: "Help us improve by sharing your feedback about your purchase experience!"</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-name">Link text</div>
+          <div class="setting-desc">The text displayed on the review link button.</div>
+          <div class="setting-default">Default: "Leave a Review"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Theme Extension Settings -->
+    <div class="card">
+      <h2>Theme App Extension Settings</h2>
+      <p>These settings are configured in the Theme Editor under <strong>App embeds</strong>:</p>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-name">Google Merchant ID</div>
+          <div class="setting-desc">Your Google Merchant Center ID. Required for the opt-in module to work.</div>
+          <div class="setting-default">Required, no default</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
+          <div class="setting-name">Opt-in Style</div>
+          <div class="setting-desc">How the Google Customer Reviews opt-in dialog appears on the page.</div>
+          <div class="setting-default">Default: Center Dialog</div>
+        </div>
+      </div>
+
+      <div class="tip">
+        <p><strong>Tip:</strong> You can find your Google Merchant ID in your <a href="https://merchants.google.com/" target="_blank">Google Merchant Center</a> account. Look for it in the top-right corner of the dashboard.</p>
+      </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="card">
+      <h2>How It Works</h2>
+      <ol>
+        <li>Customer completes checkout and lands on the thank-you page</li>
+        <li>The app displays a banner with a "Leave a Review" link</li>
+        <li>Customer clicks the link and is taken to <code>/pages/google-customer-reviews</code></li>
+        <li>Google's opt-in module appears, asking if they want to receive a review survey email</li>
+        <li>After delivery, Google emails the customer to collect their review</li>
+      </ol>
+    </div>
+
+    <!-- Requirements -->
+    <div class="card">
+      <h2>Requirements</h2>
+      <ul>
+        <li>A <a href="https://merchants.google.com/" target="_blank">Google Merchant Center</a> account with Customer Reviews enabled</li>
+        <li>Your store must use <strong>Checkout Extensibility</strong> (not legacy checkout)</li>
+        <li>The thank-you page must use the new customizable checkout experience</li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; padding: 20px; color: #8c9196; font-size: 13px;">
+      <p>Google Customer Reviews App for Shopify</p>
+    </div>
+  </div>
+</body>
+</html>
