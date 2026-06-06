@@ -2,9 +2,7 @@
 
 client_id = "8b3c2908c2827d0fedc021417d215eb7"
 name = "google-customer-reviews"
-# Update this to your GitHub Pages URL after deployment
-# Format: https://<username>.github.io/<repo-name>/
-application_url = "https://shopify.dev/apps/default-app-home"
+application_url = "https://kaodouqifei.github.io/shopify-google-customer-reviews"
 embedded = true
 
 [build]
@@ -18,4 +16,6 @@ api_version = "2026-07"
 scopes = ""
 
 [auth]
-redirect_urls = [ "https://shopify.dev/apps/default-app-home/api/auth" ]
+redirect_urls = [
+  "https://kaodouqifei.github.io/shopify-google-customer-reviews/api/auth"
+]
