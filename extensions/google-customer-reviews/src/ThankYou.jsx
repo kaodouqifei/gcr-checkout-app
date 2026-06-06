@@ -19,8 +19,8 @@ function ThankYouExtension() {
   const email = buyerIdentity?.email?.value;
   const countryCode = localization?.country?.isoCode;
 
-  const defaultDeliveryDays = settings?.default_delivery_days || 7;
-  const deliveryDate = calculateDeliveryDate(countryCode, defaultDeliveryDays);
+  const defaultDeliveryDays = settings?.default_delivery_days ?? 7;
+  const deliveryDate = calculateDeliveryDate(defaultDeliveryDays);
 
   const params = new URLSearchParams();
   params.set('order_id', orderId);
@@ -34,35 +34,31 @@ function ThankYouExtension() {
 
   const reviewsUrl = `/pages/google-customer-reviews?${params.toString()}`;
 
+  const bannerHeading = String(settings?.banner_heading || "Google Customer Reviews");
+  const promptText = String(settings?.prompt_text || "Help us improve by sharing your feedback about your purchase experience!");
+  const linkText = String(settings?.link_text || "Leave a Review");
+
+  const promptLines = promptText.split('\n').filter(line => line.trim());
+
   return (
-    <s-banner heading={shopify.i18n.translate("reviewHeading")}>
+    <s-banner heading={bannerHeading}>
       <s-stack gap="base">
-        <s-text>
-          {shopify.i18n.translate("reviewPrompt")}
-        </s-text>
+        <s-stack gap="small">
+          {promptLines.map((line, index) => (
+            <s-text key={index}>{line}</s-text>
+          ))}
+        </s-stack>
         <s-link href={reviewsUrl} target="_blank">
-          {shopify.i18n.translate("leaveReview")}
+          {linkText}
         </s-link>
       </s-stack>
     </s-banner>
   );
 }
 
-function calculateDeliveryDate(countryCode, defaultDays) {
-  const countryDeliveryMap = {
-    'US': 5,
-    'CA': 7,
-    'GB': 5,
-    'DE': 5,
-    'FR': 5,
-    'AU': 10,
-    'JP': 7,
-    'CN': 7,
-  };
-
-  const days = countryDeliveryMap[countryCode] || defaultDays;
+function calculateDeliveryDate(defaultDays) {
   const date = new Date();
-  date.setDate(date.getDate() + days);
+  date.setDate(date.getDate() + defaultDays);
 
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');

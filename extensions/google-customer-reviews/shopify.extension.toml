@@ -47,14 +47,25 @@ key = "requestedFreeGift"
 
 [extensions.settings]
 [[extensions.settings.fields]]
-key = "merchant_id"
-type = "single_line_text_field"
-name = "Google Merchant ID"
-description = "Your Google Merchant Center ID for Customer Reviews"
-
-[[extensions.settings.fields]]
 key = "default_delivery_days"
 type = "number_integer"
 name = "Default delivery days"
 description = "Default number of days for estimated delivery"
-default = 7
+
+[[extensions.settings.fields]]
+key = "banner_heading"
+type = "single_line_text_field"
+name = "Banner heading"
+description = "Heading text displayed in the banner"
+
+[[extensions.settings.fields]]
+key = "prompt_text"
+type = "multi_line_text_field"
+name = "Prompt text"
+description = "Main message displayed in the banner (supports multiple lines)"
+
+[[extensions.settings.fields]]
+key = "link_text"
+type = "single_line_text_field"
+name = "Link text"
+description = "Text displayed on the review link button"

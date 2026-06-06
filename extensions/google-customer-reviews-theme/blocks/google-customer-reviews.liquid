@@ -60,21 +60,20 @@
 
 {% schema %}
 {
-  "name": "t:names.googleCustomerReviews",
+  "name": "Google Customer Reviews",
   "target": "body",
   "settings": [
     {
       "type": "text",
       "id": "merchant_id",
-      "label": "t:settings.merchantId.label",
-      "info": "t:settings.merchantId.info",
-      "default": "123456"
+      "label": "Google Merchant ID",
+      "info": "Your Google Merchant Center ID. Find it in your Google Merchant Center account settings."
     },
     {
       "type": "select",
       "id": "opt_in_style",
-      "label": "t:settings.optInStyle.label",
-      "info": "t:settings.optInStyle.info",
+      "label": "Opt-in Style",
+      "info": "How the Google Customer Reviews opt-in dialog will appear on the page.",
       "options": [
         { "value": "CENTER_DIALOG", "label": "Center Dialog" },
         { "value": "BOTTOM_RIGHT_DIALOG", "label": "Bottom Right Dialog" },

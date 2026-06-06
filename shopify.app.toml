@@ -1,7 +1,7 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
-client_id = "6a06a93be35ead616c62819063b5c97c"
-name = "checkout-thanks-app"
+client_id = "8b3c2908c2827d0fedc021417d215eb7"
+name = "google-customer-reviews"
 application_url = "https://shopify.dev/apps/default-app-home"
 embedded = true
 

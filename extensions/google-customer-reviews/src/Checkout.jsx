@@ -11,7 +11,7 @@ function Extension() {
   if (!shopify.instructions.value.metafields.canSetCartMetafields) {
     return (
       <s-banner heading="google-customer-reviews" tone="warning">
-        {shopify.i18n.translate("metafieldChangesAreNotSupported")}
+        Cart metafield changes are not supported in this checkout
       </s-banner>
     );
   }
@@ -28,14 +28,12 @@ function Extension() {
     <s-banner heading="google-customer-reviews">
       <s-stack gap="base">
         <s-text>
-          {shopify.i18n.translate("welcome", {
-            target: <s-text type="emphasis">{shopify.extension.target}</s-text>,
-          })}
+          Welcome to the <s-text type="emphasis">{shopify.extension.target}</s-text> extension!
         </s-text>
         <s-checkbox
           checked={freeGiftRequested?.metafield?.value === "true"}
           onChange={onCheckboxChange}
-          label={shopify.i18n.translate("iWouldLikeAFreeGiftWithMyOrder")}
+          label="I would like to receive a free gift with my order"
         />
       </s-stack>
     </s-banner>
