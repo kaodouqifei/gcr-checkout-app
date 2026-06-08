@@ -12,8 +12,8 @@ automatically_update_urls_on_dev = true
 api_version = "2026-07"
 
 [access_scopes]
-# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = ""
+# write_content is required to create the Shopify Page automatically
+scopes = "write_content"
 
 [auth]
 redirect_urls = [
