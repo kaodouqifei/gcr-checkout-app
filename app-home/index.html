@@ -225,20 +225,7 @@
       </div>
     </div>
 
-    <!-- One-click Setup -->
-    <div class="card" id="setup-card">
-      <h2>One-Click Setup</h2>
-      <p>Let the app automatically create the required Shopify Page for you. If you prefer, you can also <a href="#manual-setup">create it manually</a>.</p>
-
-      <div class="action-bar">
-        <button class="btn btn-primary" id="create-page-btn" onclick="createPage()">
-          <span id="btn-text">Create Review Page</span>
-        </button>
-      </div>
-      <div class="status" id="status-msg"></div>
-    </div>
-
-    <!-- Manual Setup Steps -->
+    <!-- Setup Steps -->
     <div class="card" id="manual-setup">
       <h2>Setup Guide</h2>
       <p>Follow these steps to configure the app for your store:</p>
@@ -261,7 +248,10 @@
         <div class="step-number">2</div>
         <div class="step-content">
           <h3>Create a Shopify Page</h3>
-          <p>Go to <strong>Online Store &gt; Pages</strong> and create a new page:</p>
+          <p>Create a page with the exact handle <code>google-customer-reviews</code>:</p>
+          <div class="action-bar">
+            <a href="/admin/pages/new" target="_blank" class="btn btn-primary">Open Page Editor</a>
+          </div>
           <ul>
             <li><strong>Title</strong>: Google Customer Reviews (or any title)</li>
             <li><strong>Handle</strong>: <code>google-customer-reviews</code> (must match exactly)</li>
@@ -378,109 +368,5 @@
     </div>
   </div>
 
-  <script>
-    async function getSessionToken() {
-      if (window.shopify && shopify.idToken) {
-        return await shopify.idToken();
-      }
-      // Fallback: try App Bridge global
-      if (window.shopify && shopify.authenticatedFetch) {
-        return null;
-      }
-      throw new Error('App Bridge not ready. Please refresh the page.');
-    }
-
-    async function createPage() {
-      const btn = document.getElementById('create-page-btn');
-      const btnText = document.getElementById('btn-text');
-      const status = document.getElementById('status-msg');
-
-      btn.disabled = true;
-      btnText.innerHTML = '<span class="spinner"></span>Creating...';
-      status.className = 'status';
-      status.textContent = '';
-
-      const query = `
-        mutation pageCreate($page: PageCreateInput!) {
-          pageCreate(page: $page) {
-            page {
-              id
-              title
-              handle
-            }
-            userErrors {
-              field
-              message
-            }
-          }
-        }
-      `;
-
-      const variables = {
-        page: {
-          title: "Google Customer Reviews",
-          handle: "google-customer-reviews",
-          body: "<p></p>",
-          isPublished: true
-        }
-      };
-
-      try {
-        let token;
-        try {
-          token = await getSessionToken();
-        } catch (e) {
-          // If App Bridge token is not available, try direct fetch anyway
-          token = null;
-        }
-
-        const headers = {
-          'Content-Type': 'application/json'
-        };
-        if (token) {
-          headers['Authorization'] = `Bearer ${token}`;
-        }
-
-        const response = await fetch('shopify:admin/api/graphql.json', {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify({ query, variables })
-        });
-
-        if (!response.ok) {
-          const text = await response.text();
-          throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
-        }
-
-        const result = await response.json();
-
-        if (result.errors) {
-          throw new Error(result.errors[0].message);
-        }
-
-        const { page, userErrors } = result.data.pageCreate;
-
-        if (userErrors && userErrors.length > 0) {
-          const errorMsg = userErrors.map(e => e.message).join(', ');
-          // Handle "Handle already exists" gracefully
-          if (errorMsg.toLowerCase().includes('already been taken') || errorMsg.toLowerCase().includes('already exists')) {
-            status.className = 'status info';
-            status.textContent = 'The page already exists. You can proceed to the next setup step.';
-          } else {
-            throw new Error(errorMsg);
-          }
-        } else {
-          status.className = 'status success';
-          status.innerHTML = 'Page created successfully! <a href="/pages/google-customer-reviews" target="_blank">View page</a>';
-        }
-      } catch (error) {
-        status.className = 'status error';
-        status.textContent = 'Failed: ' + error.message;
-      } finally {
-        btn.disabled = false;
-        btnText.textContent = 'Create Review Page';
-      }
-    }
-  </script>
 </body>
 </html>

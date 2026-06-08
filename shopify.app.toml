@@ -11,14 +11,7 @@ automatically_update_urls_on_dev = true
 [webhooks]
 api_version = "2026-07"
 
-[access_scopes]
-# write_content is required to create the Shopify Page automatically
-scopes = "write_content"
-
 [auth]
 redirect_urls = [
   "https://kaodouqifei.github.io/gcr-checkout-app/api/auth"
 ]
-
-[embedded_app_direct_api_access]
-enabled = true
