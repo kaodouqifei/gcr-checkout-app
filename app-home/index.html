@@ -233,20 +233,6 @@
       <div class="step">
         <div class="step-number">1</div>
         <div class="step-content">
-          <h3>Configure Checkout Extension</h3>
-          <p>Go to <strong>Settings &gt; Checkout</strong> in your Shopify admin, then open the <strong>Checkout Editor</strong>.</p>
-          <ul>
-            <li>Switch to the <strong>Thank you</strong> page</li>
-            <li>Click <strong>Add app block</strong></li>
-            <li>Select <strong>Google Customer Reviews</strong></li>
-            <li>Configure the settings (see below)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-number">2</div>
-        <div class="step-content">
           <h3>Create a Shopify Page</h3>
           <p>Create a page with the exact handle <code>google-customer-reviews</code>:</p>
           <div class="action-bar">
@@ -261,10 +247,30 @@
       </div>
 
       <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>Configure Checkout Extension</h3>
+          <p>Open the Checkout Editor to add the review banner to your thank-you page:</p>
+          <div class="action-bar">
+            <a href="#" id="open-checkout-editor" class="btn btn-primary">Open Checkout Editor</a>
+          </div>
+          <ul>
+            <li>Switch to the <strong>Thank you</strong> page</li>
+            <li>Click <strong>Add app block</strong></li>
+            <li>Select <strong>Google Customer Reviews</strong></li>
+            <li>Configure the settings (see below)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="step">
         <div class="step-number">3</div>
         <div class="step-content">
           <h3>Enable Theme App Extension</h3>
-          <p>Go to <strong>Online Store &gt; Themes &gt; Customize</strong>, then open <strong>App embeds</strong>:</p>
+          <p>Open the Theme Editor to enable the Google Reviews embed:</p>
+          <div class="action-bar">
+            <a href="#" id="open-theme-editor" class="btn btn-primary">Open Theme Editor</a>
+          </div>
           <ul>
             <li>Find <strong>Google Customer Reviews</strong> in the app embeds list</li>
             <li>Toggle it <strong>ON</strong></li>
@@ -372,11 +378,21 @@
     (function() {
       var params = new URLSearchParams(window.location.search);
       var shop = params.get('shop');
-      var link = document.getElementById('open-page-editor');
-      if (shop && link) {
-        link.href = 'https://' + shop + '/admin/pages/new';
-        link.target = '_blank';
-      }
+      if (!shop) return;
+
+      var links = [
+        { id: 'open-page-editor', path: '/admin/pages/new' },
+        { id: 'open-checkout-editor', path: '/admin/settings/checkout' },
+        { id: 'open-theme-editor', path: '/admin/themes' }
+      ];
+
+      links.forEach(function(item) {
+        var el = document.getElementById(item.id);
+        if (el) {
+          el.href = 'https://' + shop + item.path;
+          el.target = '_blank';
+        }
+      });
     })();
   </script>
 </body>
