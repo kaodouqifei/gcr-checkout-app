@@ -249,36 +249,27 @@
       <div class="step">
         <div class="step-number">2</div>
         <div class="step-content">
-          <h3>Configure Checkout Extension</h3>
-          <p>Open the Checkout Editor to add the review banner to your thank-you page:</p>
-          <div class="action-bar">
-            <a href="#" id="open-checkout-editor" class="btn btn-primary">Open Checkout Editor</a>
-          </div>
-          <ul>
-            <li>Click the <strong>Edit</strong> button in the configuration tab</li>
-            <li>Switch to the <strong>Thank you</strong> page</li>
-            <li>Click <strong>Add app block</strong></li>
-            <li>Select <strong>Google Customer Reviews</strong></li>
-            <li>Configure the settings (see below)</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="step">
-        <div class="step-number">3</div>
-        <div class="step-content">
-          <h3>Enable Theme App Extension</h3>
-          <p>Open the Theme Editor to enable the Google Reviews embed:</p>
+          <h3>Configure Extensions</h3>
+          <p>Enable the app embed and add the review banner to your thank-you page:</p>
           <div class="action-bar">
             <a href="#" id="open-theme-editor" class="btn btn-primary">Open Theme Editor</a>
           </div>
+
+          <h4 style="margin-top: 20px; font-size: 14px; color: #202223;">A. Enable Theme App Extension</h4>
           <ul>
-            <li>Click the <strong>Edit template</strong> button on your published theme</li>
             <li>Find <strong>Google Customer Reviews</strong> in the app embeds list</li>
             <li>Toggle it <strong>ON</strong></li>
             <li>Enter your <strong>Google Merchant ID</strong></li>
             <li>Choose your preferred <strong>Opt-in Style</strong></li>
             <li>Click <strong>Save</strong></li>
+          </ul>
+
+          <h4 style="margin-top: 16px; font-size: 14px; color: #202223;">B. Add Checkout Banner</h4>
+          <ul>
+            <li>In the Checkout Editor, use the template switcher in the top-right corner to select <strong>Thank you</strong></li>
+            <li>Click <strong>Add app block</strong></li>
+            <li>Select <strong>Google Customer Reviews</strong></li>
+            <li>Configure the settings (see below)</li>
           </ul>
         </div>
       </div>
@@ -384,7 +375,6 @@
 
       var links = [
         { id: 'open-page-editor', path: '/admin/pages/new' },
-        { id: 'open-checkout-editor', path: '/admin/settings/checkout' },
         { id: 'open-theme-editor', path: '/admin/themes/current/editor?context=apps' }
       ];
 
