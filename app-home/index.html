@@ -250,7 +250,7 @@
           <h3>Create a Shopify Page</h3>
           <p>Create a page with the exact handle <code>google-customer-reviews</code>:</p>
           <div class="action-bar">
-            <a href="/admin/pages/new" target="_blank" class="btn btn-primary">Open Page Editor</a>
+            <a href="#" id="open-page-editor" class="btn btn-primary">Open Page Editor</a>
           </div>
           <ul>
             <li><strong>Title</strong>: Google Customer Reviews (or any title)</li>
@@ -368,5 +368,16 @@
     </div>
   </div>
 
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var shop = params.get('shop');
+      var link = document.getElementById('open-page-editor');
+      if (shop && link) {
+        link.href = 'https://' + shop + '/admin/pages/new';
+        link.target = '_blank';
+      }
+    })();
+  </script>
 </body>
 </html>
