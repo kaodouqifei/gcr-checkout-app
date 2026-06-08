@@ -19,3 +19,6 @@ scopes = "write_content"
 redirect_urls = [
   "https://kaodouqifei.github.io/gcr-checkout-app/api/auth"
 ]
+
+[embedded_app_direct_api_access]
+enabled = true

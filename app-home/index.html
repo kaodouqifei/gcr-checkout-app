@@ -379,6 +379,17 @@
   </div>
 
   <script>
+    async function getSessionToken() {
+      if (window.shopify && shopify.idToken) {
+        return await shopify.idToken();
+      }
+      // Fallback: try App Bridge global
+      if (window.shopify && shopify.authenticatedFetch) {
+        return null;
+      }
+      throw new Error('App Bridge not ready. Please refresh the page.');
+    }
+
     async function createPage() {
       const btn = document.getElementById('create-page-btn');
       const btnText = document.getElementById('btn-text');
@@ -415,13 +426,31 @@
       };
 
       try {
+        let token;
+        try {
+          token = await getSessionToken();
+        } catch (e) {
+          // If App Bridge token is not available, try direct fetch anyway
+          token = null;
+        }
+
+        const headers = {
+          'Content-Type': 'application/json'
+        };
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+
         const response = await fetch('shopify:admin/api/graphql.json', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
+          headers: headers,
           body: JSON.stringify({ query, variables })
         });
+
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`HTTP ${response.status}: ${text || response.statusText}`);
+        }
 
         const result = await response.json();
 
