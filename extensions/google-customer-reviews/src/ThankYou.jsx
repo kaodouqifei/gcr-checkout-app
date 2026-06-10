@@ -20,7 +20,18 @@ function ThankYouExtension() {
   const countryCode = localization?.country?.isoCode;
 
   const defaultDeliveryDays = settings?.default_delivery_days ?? 7;
-  const deliveryDate = calculateDeliveryDate(defaultDeliveryDays);
+  const useProductMetafield = settings?.use_product_metafield_for_delivery ?? false;
+
+  let deliveryDays = defaultDeliveryDays;
+
+  if (useProductMetafield) {
+    const maxDaysFromMetafields = getMaxDaysFromProductMetafields();
+    if (maxDaysFromMetafields > 0) {
+      deliveryDays = maxDaysFromMetafields;
+    }
+  }
+
+  const deliveryDate = calculateDeliveryDate(deliveryDays);
 
   const params = new URLSearchParams();
   params.set('order_id', orderId);
@@ -54,6 +65,41 @@ function ThankYouExtension() {
       </s-stack>
     </s-banner>
   );
+}
+
+function getMaxDaysFromProductMetafields() {
+  const appMetafields = shopify.appMetafields?.value || [];
+
+  const productMetafields = appMetafields.filter(
+    (entry) =>
+      entry.target?.type === "product" &&
+      entry.metafield?.namespace === "custom" &&
+      entry.metafield?.key === "expected_arrival_range"
+  );
+
+  if (productMetafields.length === 0) {
+    return 0;
+  }
+
+  let maxValue = 0;
+
+  for (const entry of productMetafields) {
+    try {
+      const value = entry.metafield?.value;
+      if (!value) continue;
+      const parsed = JSON.parse(value);
+      if (Array.isArray(parsed)) {
+        const localMax = Math.max(...parsed);
+        if (localMax > maxValue) {
+          maxValue = localMax;
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to parse expected_arrival_range metafield:", e);
+    }
+  }
+
+  return maxValue;
 }
 
 function calculateDeliveryDate(defaultDays) {

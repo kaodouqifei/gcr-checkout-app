@@ -41,11 +41,21 @@ api_access = true
 namespace = "$app"
 key = "requestedFreeGift"
 
+[[extensions.metafields]]
+namespace = "custom"
+key = "expected_arrival_range"
+
 # Defines settings that will be collected from merchants installing
 # your extension. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/latest/configuration#settings-definition
 
 [extensions.settings]
+[[extensions.settings.fields]]
+key = "use_product_metafield_for_delivery"
+type = "boolean"
+name = "Use product metafield for delivery estimate"
+description = "Read expected arrival range from product metafield custom.expected_arrival_range instead of using default delivery days"
+
 [[extensions.settings.fields]]
 key = "default_delivery_days"
 type = "number_integer"

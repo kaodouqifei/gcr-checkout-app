@@ -282,8 +282,16 @@
 
       <div class="setting-row">
         <div>
+          <div class="setting-name">Use product metafield for delivery</div>
+          <div class="setting-desc">Read expected arrival range from product metafield <code>custom.expected_arrival_range</code> instead of using default delivery days.</div>
+          <div class="setting-default">Default: OFF</div>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div>
           <div class="setting-name">Default delivery days</div>
-          <div class="setting-desc">Number of days added to the order date to estimate delivery.</div>
+          <div class="setting-desc">Number of days added to the order date to estimate delivery. Used when product metafield is disabled or not found.</div>
           <div class="setting-default">Default: 7</div>
         </div>
       </div>
